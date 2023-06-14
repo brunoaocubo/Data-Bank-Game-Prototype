@@ -4,19 +4,36 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Collider areaSpawnObject;
     [SerializeField] private GameObject[] objectsToSpawn;
+    [SerializeField] private float spawnInterval = 10f;
+    [SerializeField] private int objectsPerSpawn = 1;
+    [SerializeField] private int spawnWaves = 5;
 
-    private void Start()
+    private float timer = 0f;
+
+    private void Update()
     {
-        var bounds = areaSpawnObject.bounds.size;
-        float randomX = Random.Range(-bounds.x, +bounds.x);
-        float randomZ = Random.Range(-bounds.z, +bounds.z);
-        Vector3 randomPos = new Vector3(randomX, areaSpawnObject.transform.position.y,randomZ);
-
-        for (int i = 0; i < objectsToSpawn.Length; i++)
+        if(spawnWaves > 0) 
         {
-            Instantiate(objectsToSpawn[i], randomPos, Quaternion.identity);
-        }     
+            timer += Time.deltaTime;
+
+            if (timer >= spawnInterval)
+            {
+                SpawnObjects();
+                timer = 0f;
+                spawnWaves--;
+            }
+        }
+    }
+
+    private void SpawnObjects()
+    {
+        for (int i = 0; i < objectsPerSpawn; i++)
+        {
+            int randomIndex = Random.Range(0, objectsToSpawn.Length);
+            Vector3 randomPos = new Vector3(Random.Range(-20f, 15f), 5, Random.Range(-20f, 15f));
+
+            Instantiate(objectsToSpawn[randomIndex], randomPos, Quaternion.identity);
+        }
     }
 }

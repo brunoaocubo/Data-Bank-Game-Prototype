@@ -6,17 +6,38 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public string nameItem;
-    public float value;
+    public int value;
+
+    [System.Obsolete]
+    private void Start()
+    {
+        value = Random.RandomRange(0, 300);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player") 
+        if (collision.collider.CompareTag("Player")) 
         {
-            collision.gameObject.GetComponent<PlayerController>().AddItem(this);
+            PlayerInventory playerInventory = collision.collider.GetComponent<PlayerInventory>();
+            playerInventory.AddItem(this);
+
+            if (playerInventory.items.Contains(this))
+            {
+                transform.SetParent(playerInventory.containerCollectable.transform);
+                gameObject.SetActive(false);
+            }                 
         }
-        else if (collision.gameObject.tag == "Enemy") 
+
+        if (collision.collider.CompareTag("NPC"))
         {
-            collision.gameObject.GetComponent<EnemyController>().AddItem(this);
+            EnemyInventory enemyInventory = collision.collider.GetComponent<EnemyInventory>();
+            enemyInventory.AddItem(this);
+
+            if (enemyInventory.items.Contains(this))
+            {
+                transform.SetParent(enemyInventory.containerCollectable.transform);
+                gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -9,13 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3961635424240214804}
+  - component: {fileID: -3156499512087963257}
   - component: {fileID: 263959470671853589}
   - component: {fileID: 1591346344328061252}
   - component: {fileID: 7891393815687081768}
   - component: {fileID: 6078151953914455409}
   m_Layer: 0
   m_Name: Item_03
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +36,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3156499512087963257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7803055704466169152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 175e8150bd3ef554a82f353ae39a8b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameItem: Ring
+  value: 0
 --- !u!33 &263959470671853589
 MeshFilter:
   m_ObjectHideFlags: 0
