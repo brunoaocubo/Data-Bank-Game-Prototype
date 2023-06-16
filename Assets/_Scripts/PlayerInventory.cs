@@ -22,5 +22,24 @@ public class PlayerInventory : MonoBehaviour
             items.Remove(item);
         }      
     }
+
+    public Item GetItemMostValue()
+    {
+        if (items.Count <= 0)
+        {
+            return null;
+        }
+
+        Item hightestValueItem = items[0];
+
+        for (int i = 1; i < items.Count; i++)
+        {
+            if (items[i].value > hightestValueItem.value)
+            {
+                hightestValueItem = items[i];
+            }
+        }
+        return hightestValueItem;
+    }
 }
 

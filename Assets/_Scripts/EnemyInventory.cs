@@ -6,6 +6,12 @@ public class EnemyInventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
     public GameObject containerCollectable;
+    public int id;
+
+    private void Start()
+    {
+        EnemyInventory inventory = this;
+    }
 
     public void AddItem(Item item)
     {
@@ -38,6 +44,4 @@ public class EnemyInventory : MonoBehaviour
         }
         return hightestValueItem;      
     }
-
-    
 }

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : MonoBehaviour
 {
@@ -36,21 +35,16 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("NPC"))
         {
             Vector3 toTarget = (collision.transform.forward - transform.position).normalized;
+            EnemyInventory enemyInventory = collision.collider.gameObject.GetComponent<EnemyInventory>();
+            Item item = enemyInventory.GetItemMostValue();
 
             if (Vector3.Dot(toTarget, transform.forward) < 0)
             {
-                Debug.Log("Target is in front of this game object.");
-            }
-            else
-            {
-                EnemyInventory enemyInventory = collision.gameObject.GetComponent<EnemyInventory>();
-                Item item = enemyInventory.GetItemMostValue();
-
                 if (item != null)
                 {
                     inventory.AddItem(item);
-                    enemyInventory.RemoveItem(item);
                     item.transform.SetParent(inventory.containerCollectable.transform);
+                    enemyInventory.RemoveItem(item);
                 }
             }
         }
