@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
+    public int id = 0;
     public List<Item> items = new List<Item>();
     public GameObject containerCollectable;
-    public int id = 0;
+    
 
     public void AddItem(Item item) 
     {
@@ -43,4 +44,3 @@ public class PlayerInventory : MonoBehaviour
         return hightestValueItem;
     }
 }
-

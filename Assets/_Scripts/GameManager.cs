@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
 {
     [Header("UI Config")]
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private Text stopWatch;
 
     [Header("Game Config")]
     [SerializeField] private GameObject[] objectsToSpawn;
@@ -16,9 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int spawnWaves = 5;
     [SerializeField] private float timerGame = 30f;
 
-    [Header("Save & Load DataBank")]
+    [Header("Save DataBank")]
     [SerializeField] private DataBankSQL dataBankSQL;
-    [SerializeField] private DataBankJson dataBankJson;
+    [SerializeField] private DataBankJson dataBankJson = new DataBankJson();
+    List<EnemyInventory> npcInventories = new List<EnemyInventory>();
     [SerializeField] private PlayerInventory playerInventory = new PlayerInventory();
     [SerializeField] private EnemyInventory[] npcInventory = new EnemyInventory[3];
 
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        stopWatch.text = countTimerGame.ToString("F0");
+
         if(spawnWaves > 0) 
         {
             timerSpawn += Time.deltaTime;
@@ -59,7 +64,6 @@ public class GameManager : MonoBehaviour
         if(timerGame <= 0) 
         {
             countTimerGame = 0f;
-            FinishGame();
         }
     }
 
@@ -74,10 +78,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void FinishGame() 
+    public void SaveGameJson() 
+    {
+        npcInventories.Add(npcInventory[0]);
+        npcInventories.Add(npcInventory[1]);
+        npcInventories.Add(npcInventory[2]);
+
+        dataBankJson.SavePlayerInventoryToJson(playerInventory);
+        dataBankJson.SaveNpcInventoryToJson(npcInventories);
+    }
+
+    public void SaveGameSQL() 
     {
         dataBankSQL.SaveInventoryData(0, playerInventory.items);
-
         dataBankSQL.SaveInventoryData(1, npcInventory[0].items);
         dataBankSQL.SaveInventoryData(2, npcInventory[1].items);
         dataBankSQL.SaveInventoryData(3, npcInventory[2].items);
@@ -85,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame() 
     {
-        FinishGame();
+        SaveGameSQL();
         Application.Quit();
     }
 }
