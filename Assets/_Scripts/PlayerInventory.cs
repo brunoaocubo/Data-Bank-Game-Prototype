@@ -6,6 +6,7 @@ public class PlayerInventory : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
     public GameObject containerCollectable;
+    public int id = 0;
 
     public void AddItem(Item item) 
     {

@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public string nameItem;
+    public string itemName;
     public int value;
 
+    public Item(string itemName, int value) 
+    {
+        this.itemName = itemName;
+        this.value = value;
+    }
     [System.Obsolete]
     private void Start()
     {
